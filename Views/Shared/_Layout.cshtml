@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - lista7_zad1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lista7_zad1.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                    <ul class="navbar-nav d-flex justify-content-center align-content-center">
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a></li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Classifications" asp-action="Index">Klasyfikacje</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Grades" asp-action="Index">Oceny</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="GradeVals" asp-action="Index">Oceny slownik</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Majors" asp-action="Index">Kierunki</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="People" asp-action="Index">Osoby</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Students" asp-action="Index">Studenci</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Professors" asp-action="Index">Prowadzący</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Subjects" asp-action="Index">Przedmioty</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item"><a class="nav-link text-white" asp-controller="Admins" asp-action="Index">Admini</a></li>
+                        }
+                    }
+                    </ul>
+                <div class="d-flex w-auto align-content-end">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Home" asp-action="Logout" method="post">
+                            <input type="submit" class="btn btn-primary text-white text-center align-self-center" value="Wyloguj się" />
+                        </form>
+                    }
+                    else
+                    {
+                        <p class="text-white text-center align-middle m-0">Nie jestes zalogowany</p>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Maciej Tabor
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

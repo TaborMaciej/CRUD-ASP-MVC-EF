@@ -1,0 +1,57 @@
+﻿@model IEnumerable<lista7_zad1.Models.Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AlbumNr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.People)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Major)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlbumNr)
+            </td>
+            <td>
+                @item.People?.OsobaId - @item.People?.Name @item.People?.Surname
+            </td>
+            <td>
+                @item.Major?.MajorID - @item.Major?.Name
+            </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.StudentId"> Details </a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span>&nbsp;|&nbsp;</span>
+
+                        <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a>
+
+                        <span>&nbsp;|&nbsp;</span>
+                        <a asp-action="Delete" asp-route-id="@item.StudentId"> Delete</a>
+                    }
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<lista7_zad1.Models.Grade>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form class="row justify-content-start d-flex" asp-action="Index" method="get">
+    <select class="col-3 mx-1" name="SelectedStudent">
+        @foreach (var student in ViewBag.StudentList)
+        {
+            if (student.Value == ViewData["BaseStudent"] as string)
+            {
+                <option value="@student.Value" selected>@student.Text</option>
+            }
+            else
+            {
+                <option value="@student.Value">@student.Text</option>
+            }
+        }
+    </select>
+
+    <select class="col-3 mx-1" name="SelectedSubject">
+        @foreach (var subject in ViewBag.SubjectList)
+        {
+            if (subject.Value == ViewData["BaseSubject"] as string)
+            {
+                <option value="@subject.Value" selected>@subject.Text</option>
+            }
+            else
+            {
+                <option value="@subject.Value">@subject.Text</option>
+            }
+        }
+    </select>
+    <input class="col-2 btn btn-primary mx-1" type="submit" />
+    <a asp-action="Index" class="col-2 btn btn-primary ms-auto">RESET</a>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Professor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GradeVal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Classification)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @item.Student?.StudentId - @item.Student?.AlbumNr
+            </td>
+            <td>
+                @item.Professor?.ProfessorID - @item.Professor?.AlbumNr
+            </td>
+            <td>
+                @item.GradeVal?.Value (@item.GradeVal?.Name)
+            </td>
+            <td>
+                @item.Subject?.Name
+            </td>
+            <td>
+                @item.Classification?.Name
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GradeID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GradeID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GradeID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
